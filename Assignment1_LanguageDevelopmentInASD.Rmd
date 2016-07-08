@@ -1,0 +1,142 @@
+---
+title: "Assignment 1 - Language Development in ASD"
+author: "Riccardo Fusaroli"
+date: "July 7, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Language development in Autism Spectrum Disorder (ASD)
+
+Background: Autism Spectrum Disorder is often related to language impairment. However, this phenomenon has not been empirically traced in detail: i) relying on actual naturalistic language production, ii) over extended periods of time. We therefore videotaped 32 kids with ASD and 35 comparison kids (matched by linguistic performance at visit 1) for ca. 30 minutes of naturalistic interactions with a parent. We repeated the data collection 6 times per kid, with 4 months between each visit. We transcribed the data and counted: 
+i) how many words does the kid use in each video? How many does the parent? 
+ii) how many unique words does the kid use in each video? How many does the parent? 
+iii) how many morphemes per utterance (Mean Length of Utterance) does the child use? And the parent? 
+We then want to test the language trajectory of child and parent over time.
+
+Exercise 1) Describe the participant samples in the dataset. Do you think it’s well balanced between the two groups?
+
+Exercise 2) How does the developmental trajectory of unique words used change over time and by diagnosis? Identify the relevant Independent Variables to add to the model. Which are fixed and which random factors?
+Draw a plot and report a statistical test. 
+Do you think the development follows a linear trend? What about MLU? How would you account for that?
+
+Exercise 3) What about the parent? Draw a plot and report a statistical test of parental trajectories in language use. What do you think is going on?
+
+Exercise 4) The dataset contains some additional variables characterizing the kids’ cognitive and clinical profile: ADOS (autism severity), MSEL_EL (Expressive Language, that is, linguistic skills at first visit as assessed by a psychologist using Mullen Scales of Early Learning), MSEL_VR (Visual Reception, used as a proxy for non verbal IQ at first visit), Age, Gender, Ethnicity. Would it make sense to add any of them to your model of linguistic trajectories?  
+
+OPTIONAL Exercise 5): does the additional variable change the average level of e.g. MLU or its change over time? How would you statistically test the first? How would you statistically test the second?
+
+### Structure of the exercise
+
+Basic stuff:
+- Loading the libraries
+- Setting the directory and loading the data
+- Look at the data (which variables are there? Are they in the right format?)
+- Describe the participants (by diagnosis)
+
+We will try to answer two separate questions:
+
+- Do children with ASD develop language differently from non-ASD children?
+- Do parents speak differently to children with ASD than to non-ASD ones?
+  
+### Loading the relevant libraries
+
+Load necessary libraries : what will you need?
+
+- e.g. something to plot with
+- e.g. mixed effects models
+
+```{r Load Libraries}
+
+```
+
+### Define your working directory and load the data
+
+- Create a new variable called locpath (localpath)
+- Set it to be equal to your working directory
+- Move to that directory (setwd(locpath))
+- Load the data: "Assignment1_LanguageDevelopmentInASD.csv" (use read.csv(fileName))
+
+```{r Load Data}
+
+getwd()
+locpath=
+setwd(locpath)
+Data =
+
+```
+
+### Characterize the participants
+
+Identify relevant variables: participants demographic characteristics, diagnosis, ADOS, MSEL_EL, MSEL_VR, Visit, Number of words used, Number of unique words used, length of utterance in both child and parents.
+
+Make sure the variables are in the right format.
+
+Describe the characteristics of the two groups of participants and whether the two groups are well matched.
+
+```{r}
+
+```
+
+## Let's test hypothesis 1: Children with ASD display a language impairment
+
+### Hypothesis 1a: Number of words used by the child change: i) over time, ii) according to diagnosis
+
+Remember to plot the data first and then to run a statistical test.
+- Which variable(s) should be included as fixed factors?
+- Which variable(s) should be included as random factors?
+
+```{r}
+
+```
+
+### Hypothesis 1b: Number of unique words used by the child change: i) over time, ii) according to diagnosis
+
+Remember to plot the data first and then to run a statistical test.
+- Which variable(s) should be included as fixed factors?
+- Which variable(s) should be included as random factors?
+
+```{r}
+
+```
+
+### Hypothesis 1c: Length of utterance used by the child changes: i) over time, ii) according to diagnosis
+
+```{r}
+
+```
+
+## Let's test hypothesis 2: Parents speak equally to children with ASD and TD
+
+### Hypothesis 2a: number of words used by the parent change: i) over time, ii) according to diagnosis
+
+Remember to plot the data first and then to run a statistical test.
+
+```{r}
+
+```
+
+### Hypothesis 2b: Unique words used by the parent change: i) over time, ii) according to diagnosis
+
+Remember to plot the data first and then to run a statistical test.
+
+```{r}
+
+```
+
+### Hypothesis 2c: Length of utterance used by the parent changes: i) over time, ii) according to diagnosis
+
+```{r}
+
+```
+
+### Adding new variables
+
+Choose an additional variable (from exercise 4) to add to the model. Test its impact on the average level of unique words. Test its impact on the change in unique words over time.
+
+```{r}
+
+```
