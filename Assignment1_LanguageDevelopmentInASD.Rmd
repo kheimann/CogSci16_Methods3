@@ -17,7 +17,7 @@ ii) how many unique words does the kid use in each video? How many does the pare
 iii) how many morphemes per utterance (Mean Length of Utterance) does the child use? And the parent? 
 We then want to test the language trajectory of child and parent over time.
 
-Exercise 1) Describe the participant samples in the dataset. Do you think it’s well balanced between the two groups?
+Exercise 1) Preliminary Data Exploration: Describe the participant samples in the dataset. Do you think it’s well balanced between the two groups?
 
 Exercise 2) How does the developmental trajectory of unique words used change over time and by diagnosis? Identify the relevant Independent Variables to add to the model. Which are fixed and which random factors?
 Draw a plot and report a statistical test. 
@@ -25,7 +25,7 @@ Do you think the development follows a linear trend? What about MLU? How would y
 
 Exercise 3) What about the parent? Draw a plot and report a statistical test of parental trajectories in language use. What do you think is going on?
 
-Exercise 4) The dataset contains some additional variables characterizing the kids’ cognitive and clinical profile: ADOS (autism severity), MSEL_EL (Expressive Language, that is, linguistic skills at first visit as assessed by a psychologist using Mullen Scales of Early Learning), MSEL_VR (Visual Reception, used as a proxy for non verbal IQ at first visit), Age, Gender, Ethnicity. Would it make sense to add any of them to your model of linguistic trajectories?  
+Exercise 4) The dataset contains some additional variables characterizing the kids’ cognitive and clinical profile: ADOS (autism severity), MSEL EL (Expressive Language, that is, linguistic skills at first visit as assessed by a psychologist using Mullen Scales of Early Learning), MSEL VR (Visual Reception, used as a proxy for non verbal IQ at first visit), Age, Gender, Ethnicity. Would it make sense to add any of them to your model of linguistic trajectories?  
 
 OPTIONAL Exercise 5): does the additional variable change the average level of e.g. MLU or its change over time? How would you statistically test the first? How would you statistically test the second?
 
@@ -62,16 +62,16 @@ Load necessary libraries : what will you need?
 
 ```{r Load Data}
 
-getwd()
-locpath=
-setwd(locpath)
-Data =
+#getwd()
+#locpath=
+#setwd(locpath)
+#Data =
 
 ```
 
 ### Characterize the participants
 
-Identify relevant variables: participants demographic characteristics, diagnosis, ADOS, MSEL_EL, MSEL_VR, Visit, Number of words used, Number of unique words used, length of utterance in both child and parents.
+Identify relevant variables: participants demographic characteristics, diagnosis, ADOS, MSEL EL, MSEL VR, Visit, Number of words used, Number of unique words used, length of utterance in both child and parents.
 
 Make sure the variables are in the right format.
 
@@ -85,6 +85,8 @@ Describe the characteristics of the two groups of participants and whether the t
 
 ### Hypothesis 1a: Number of words used by the child change: i) over time, ii) according to diagnosis
 
+Let's start with a simple mixed effects linear model
+
 Remember to plot the data first and then to run a statistical test.
 - Which variable(s) should be included as fixed factors?
 - Which variable(s) should be included as random factors?
@@ -92,6 +94,30 @@ Remember to plot the data first and then to run a statistical test.
 ```{r}
 
 ```
+
+How would you evaluate whether the model is a good model?
+
+```{r}
+
+```
+
+Not too good, right? Let's check whether a growth curve model is better.
+Remember: a growth curve model assesses whether changes in time can be described by linear, or quadratic, or cubic (or... etc.) components.
+First build the different models, then compare them to see which one is better
+
+```{r}
+
+```
+
+Exciting right?
+Now it's time to report our results.
+Remember to report:
+- the estimates for each predictor (beta estimate, standard error, p-value)
+- A plain word description of the results
+
+Linguistic development of total words used in children is affected by ... [COMPLETE]
+
+Let's now apply what we have learned to the other indexes of child language performance and parent language performance.
 
 ### Hypothesis 1b: Number of unique words used by the child change: i) over time, ii) according to diagnosis
 
