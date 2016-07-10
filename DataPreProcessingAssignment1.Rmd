@@ -1,0 +1,48 @@
+---
+title: "DataPreprocessingAssignment1"
+author: "Riccardo Fusaroli"
+date: "July 9, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Create Hold out data for Assignment 1
+
+```{r}
+library(caret)
+setwd('/Users/semrf/Dropbox/MyGitHub/CogSci16_Methods3/')
+Data=read.csv('Assignment1_LanguageDevelopmentInASD.csv')
+
+train.index1 <- createDataPartition(Data$Child.ID, p = .9, list = FALSE)
+
+trainDataTemp <- Data[ train.index1,]
+testData2  <- Data[-train.index1,]
+
+train.index2 <- createDataPartition(trainDataTemp$Child.ID, p = .9, list = FALSE)
+trainData <- Data[ train.index2,]
+testData1  <- Data[-train.index2,]
+
+```
+
+## Train a model and test it - Vanilla Version
+
+```{r}
+library(lme4)
+
+model = lmer(ChildMLU~Visit*Diagnosis+(1|Child.ID),trainData,REML=F)
+testData2$predict=predict(model,testData2, allow.new.levels = TRUE)
+ggplot(testData2,aes(predict,ChildMLU))+geom_point(aes(colour=as.factor(Child.ID)))
+model1=lmer(ChildMLU~predict+(1|Child.ID),testData2,REML=F)
+r.squaredGLMM(model1)
+
+```
+
+## Train a model and test it - Cross-Validation
+
+```{r}
+
+```
+

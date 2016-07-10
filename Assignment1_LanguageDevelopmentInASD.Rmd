@@ -11,36 +11,52 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Language development in Autism Spectrum Disorder (ASD)
 
-Background: Autism Spectrum Disorder is often related to language impairment. However, this phenomenon has not been empirically traced in detail: i) relying on actual naturalistic language production, ii) over extended periods of time. We therefore videotaped 32 kids with ASD and 35 comparison kids (matched by linguistic performance at visit 1) for ca. 30 minutes of naturalistic interactions with a parent. We repeated the data collection 6 times per kid, with 4 months between each visit. We transcribed the data and counted: 
+Background: Autism Spectrum Disorder is often related to language impairment. However, this phenomenon has not been empirically traced in detail: i) relying on actual naturalistic language production, ii) over extended periods of time. We therefore videotaped circa 30 kids with ASD and circa 30 comparison kids (matched by linguistic performance at visit 1) for ca. 30 minutes of naturalistic interactions with a parent. We repeated the data collection 6 times per kid, with 4 months between each visit. We transcribed the data and counted: 
 i) how many words does the kid use in each video? How many does the parent? 
 ii) how many unique words does the kid use in each video? How many does the parent? 
 iii) how many morphemes per utterance (Mean Length of Utterance) does the child use? And the parent? 
 We then want to test the language trajectory of child and parent over time.
 
-Exercise 1) Preliminary Data Exploration: Describe the participant samples in the dataset. Do you think it’s well balanced between the two groups?
+This Markdown is structured in the following way:
 
-Exercise 2) How does the developmental trajectory of unique words used change over time and by diagnosis? Identify the relevant Independent Variables to add to the model. Which are fixed and which random factors?
-Draw a plot and report a statistical test. 
-Do you think the development follows a linear trend? What about MLU? How would you account for that?
+1. The exercises: read them carefully. Under each exercise you will have to write your answers, once you have written and run the code.
+2. A guided template full of hints for writing the code to solve the exercises. Fill in the code and the paragraphs as required. Then report your results under the exercise part.
+3. In exercise 4 you will be asked to create the best possible model of language development in TD and ASD children, picking and choosing whatever additional variables you want from the dataset. Next time, the models produced by the different groups will compete against each other to see who can produce the best model, so choose carefully!
 
-Exercise 3) What about the parent? Draw a plot and report a statistical test of parental trajectories in language use. What do you think is going on?
+## Exercise 1) Preliminary Data Exploration
+Describe the participant samples in the dataset. Do you think the two groups are well balanced? If not, what do you think was the reason?
 
-Exercise 4) The dataset contains some additional variables characterizing the kids’ cognitive and clinical profile: ADOS (autism severity), MSEL EL (Expressive Language, that is, linguistic skills at first visit as assessed by a psychologist using Mullen Scales of Early Learning), MSEL VR (Visual Reception, used as a proxy for non verbal IQ at first visit), Age, Gender, Ethnicity. Would it make sense to add any of them to your model of linguistic trajectories?  
+[HERE GOES YOUR ANSWER]
 
-OPTIONAL Exercise 5): does the additional variable change the average level of e.g. MLU or its change over time? How would you statistically test the first? How would you statistically test the second?
+### Exercise 2) Children learning language: the effects of time and ASD
+Describe linguistic development in TD and ASD children. Does it vary across the three different measures of linguistic performance (total words, unique words, MLU)?
 
-### Structure of the exercise
+[HERE GOES YOUR ANSWER]
+
+### Exercise 3) Child directed speech as a moving target
+Describe how parental use of language changes over time. What do you think is going on?
+
+[HERE GOES YOUR ANSWER]
+
+### Exercise 4) Looking into "individual differences" (demographic, clinical or cognitive profiles)
+The dataset contains some additional variables characterizing the kids’ cognitive and clinical profile: ADOS (autism severity), MSEL EL (Expressive Language, that is, linguistic skills at first visit as assessed by a psychologist using Mullen Scales of Early Learning), MSEL VR (Visual Reception, used as a proxy for non verbal IQ at first visit), Age, Gender, Ethnicity. Would it make sense to add any of them to your model of linguistic trajectories? Create the best possible model (the one that best explain the data). Next time your model will be tested on new participants, and we will proclaim a winner.
+
+[HERE GOES YOUR ANSWER]
+
+### [OPTIONAL] Exercise 5 ) Comment on how the three linguistic variables measure linguistic performance (the so-called "construct validity" of the measures). Do they express the same variance?
+
+### Structure of the code chunks
 
 Basic stuff:
 - Loading the libraries
 - Setting the directory and loading the data
-- Look at the data (which variables are there? Are they in the right format?)
-- Describe the participants (by diagnosis)
+- Look at the data (which variables are there? Are they in the right format?) and describe the participants (by diagnosis)
 
-We will try to answer two separate questions:
+We will try to answer three questions:
 
 - Do children with ASD develop language differently from non-ASD children?
 - Do parents speak differently to children with ASD than to non-ASD ones?
+- Which variables should we use to best explain the child linguistic performance?
   
 ### Loading the relevant libraries
 
@@ -81,6 +97,8 @@ Describe the characteristics of the two groups of participants and whether the t
 
 ```
 
+[REPORT THE RESULTS]
+
 ## Let's test hypothesis 1: Children with ASD display a language impairment
 
 ### Hypothesis 1a: Number of words used by the child change: i) over time, ii) according to diagnosis
@@ -115,6 +133,7 @@ Remember to report:
 - the estimates for each predictor (beta estimate, standard error, p-value)
 - A plain word description of the results
 
+[REPORT THE RESULTS]
 Linguistic development of total words used in children is affected by ... [COMPLETE]
 
 Let's now apply what we have learned to the other indexes of child language performance and parent language performance.
@@ -129,11 +148,15 @@ Remember to plot the data first and then to run a statistical test.
 
 ```
 
+[REPORT THE RESULTS]
+
 ### Hypothesis 1c: Length of utterance used by the child changes: i) over time, ii) according to diagnosis
 
 ```{r}
 
 ```
+
+[REPORT THE RESULTS]
 
 ## Let's test hypothesis 2: Parents speak equally to children with ASD and TD
 
@@ -145,6 +168,8 @@ Remember to plot the data first and then to run a statistical test.
 
 ```
 
+[REPORT THE RESULTS]
+
 ### Hypothesis 2b: Unique words used by the parent change: i) over time, ii) according to diagnosis
 
 Remember to plot the data first and then to run a statistical test.
@@ -153,11 +178,15 @@ Remember to plot the data first and then to run a statistical test.
 
 ```
 
+[REPORT THE RESULTS]
+
 ### Hypothesis 2c: Length of utterance used by the parent changes: i) over time, ii) according to diagnosis
 
 ```{r}
 
 ```
+
+[REPORT THE RESULTS]
 
 ### Adding new variables
 
@@ -166,3 +195,5 @@ Choose an additional variable (from exercise 4) to add to the model. Test its im
 ```{r}
 
 ```
+
+REPORT OF THE RESULTS
