@@ -11,6 +11,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Welcome to the second exciting part of the Language Development in ASD exercise
 
+http://ellisp.github.io/blog/2016/06/05/bootstrap-cv-strategies
+
 In this exercise we will delve more in depth with different practices of model comparison and model selection, by first evaluating your models from last time, then learning how to cross-validate models and finally how to systematically compare models.
 
 ### Exercise 1) Testing model performance
@@ -52,12 +54,24 @@ In this exercise you have to:
 ```{r}
 
 # Creating the model
+Model = lmer(ChildMLU~Visit*Diagnosis+(1+Visit|Child.ID),TrainData,REML=F)
 
-# Testing the prediction against the test data
+# Testing the prediction
+TestData$predict=predict(Model,testData1, allow.new.levels = TRUE)
 
 # Visually comparing the results
+TrainPlot=ggplot(TrainData,aes(fitted(Model),ChildMLU))+geom_point(aes(colour=as.factor(Child.ID)))+geom_smooth(method=lm)
+TestPlot=ggplot(TestData,aes(predict,ChildMLU))+geom_point(aes(colour=as.factor(Child.ID)))+geom_smooth(method=lm)
+print(TrainPlot)
+print(TestPlot)
 
 # Comparing the Root Mean Square Error of the model on the training and on the testing data
+TrainRMSE=rmse(TrainData$ChildMLU,fitted(Model))
+TestRMSE=rmse(TestData$ChildMLU,TestData$predict)
+
+# Comparing the R squared of the model on the training and on the testing data
+#TrainR2=r.squaredGLMM(Model)
+#TestR2=r.squaredGLMM(lmer(ChildMLU~predict+(1|Child.ID),TestData))
 
 # Bonus: Prediction Intervals
 predictIntervals <- predictInterval(Model, TestData, n.sims = 999)
@@ -73,46 +87,68 @@ Tips:
 - google the function "createFolds"
 - loop through each fold, train a model and test it on the data not included in the fold
 
-
 ```{r}
 
 # How many folds?
+folds=5
 
 # Create the folds
 # N.B: you want stratified folds, so that any given child is only in the training set or only in the testing set
+x1=createFolds(trainData$Child.ID, k = folds, list = T, returnTrain = T)
 
-# Per each model you want to compare:
-# - Loop through each fold
-# - Run the model on the fold
-# - Calculate and save RMSE on the training data,
-# - Test the model on the data not included in the fold
-# - Calculate and save RMSE on this data.
+# Initialize performance vectors
+r2Train=0
+r2Test=0
+rmseTrain=0
+rmseTest=0
 
-# Now check the error for training and test data
+# Loop through each fold, run the model on the fold, calculate RMSE on the training data, test the model on the data not included in the fold, calculate RMSE on this data.
 
+for (i in 1:folds){
+  modelF=lmer(ChildMLU~(Visit+Visit^2)*Diagnosis+(1+Visit+Visit^2|Child.ID),trainData[x1[[i]],],REML=F)
+  r2Train[i]=r.squaredGLMM(modelF)
+  rmseTrain[i]=rmse(trainData$ChildMLU[x1[[i]]],fitted(modelF))
+  DataFx=trainData[!(1:317 %in% x1[[i]]),c("ChildMLU","Visit","Child.ID")]
+  DataFx$predictions=predict(modelF,trainData[!(1:317 %in% x1[[i]]),], allow.new.levels = TRUE)
+  rmseTest[i]=rmse(DataFx$ChildMLU,DataFx$predictions)
+  # The following lines are for testing on the test data
+  #testData1$predictions=predict(modelF,testData1, allow.new.levels = TRUE)
+  #rmseTest2[i]=rmse(testData1$ChildMLU,testData1$predictions)
+  #if (i==1){
+  #  CVPredictions=DataFx
+  #} else {
+  #  CVPredictions=rbind(CVPredictions,DataFx)
+  #}
+}
 
+print(rmseTrain)
+print(rmseTest)
+#r.squaredGLMM(lmer(ChildMLU~predictions+(1+Visit+Visit^2|Child.ID),CVPredictions))
+#CVPredictions$ChildMLU=scale(CVPredictions$ChildMLU,center=T,scale=T)
+#CVPredictions$predictions=scale(CVPredictions$predictions,center=T,scale=T)
+#sum((CVPredictions$ChildMLU-CVPredictions$predictions)^2)
+#rmseTestAll=rmse(CVPredictions$ChildMLU,CVPredictions$predictions)
+#ggplot(testData1,aes(predictions,ChildMLU))+geom_point(aes(colour=as.factor(Child.ID)))+geom_smooth(method=lm)
+
+# Bonus Question 1: What is the effect of changing the number of folds? Can you plot RMSE as a function of number of folds?
+# Bonus Question 2: test the cross-validated predictive error against the actual predictive error on the test data (Assignment1TestData1.csv)
 
 ```
 
 [HERE REPORT YOUR RESULTS]
-
-- Bonus Question 1: What is the effect of changing the number of folds? Can you plot RMSE as a function of number of folds?
-- Bonus Question 2: test the cross-validated predictive error against the actual predictive error on the test data (Assignment1TestData1.csv)
-
 
 ## Using Information Criteria for model selection (Exercise 3)
 
 ```{r}
 
-# Run the models you want to compare and extract AIC or BIC
+# How to extract AIC and BIC
 
-# Choose the model with the lowest one
+# Choose the lowest one
 
+# Bonus question: are information criteria correlated with RMSE?
 ```
 
 [HERE REPORT YOUR RESULTS]
-
-- Bonus question: are information criteria correlated with cross-validated RMSE?
 
 ## Bonus exercise: Using Lasso for model selection (Exercise 4)
 

@@ -16,15 +16,19 @@ library(caret)
 setwd('/Users/semrf/Dropbox/MyGitHub/CogSci16_Methods3/')
 Data=read.csv('Assignment1_LanguageDevelopmentInASD.csv')
 
-train.index1 <- createDataPartition(Data$Child.ID, p = .9, list = FALSE)
+train.index2 <- createDataPartition(Data$Child.ID, p = .9, list = FALSE)
 
-trainDataTemp <- Data[ train.index1,]
-testData2  <- Data[-train.index1,]
+trainData2 <- Data[ train.index2,]
+testData2  <- Data[-train.index2,]
 
-train.index2 <- createDataPartition(trainDataTemp$Child.ID, p = .9, list = FALSE)
-trainData <- Data[ train.index2,]
-testData1  <- Data[-train.index2,]
+train.index1 <- createDataPartition(trainDataTemp$Child.ID, p = .9, list = FALSE)
+trainData1 <- Data[ train.index1,]
+testData1  <- Data[-train.index1,]
 
+write.csv(trainData1,"Assignment1TrainData1.csv")
+write.csv(trainData2,"Assignment1TrainData2.csv")
+write.csv(testData1,"Assignment1TestData1.csv")
+write.csv(testData2,"Assignment1TestData2.csv")
 ```
 
 
