@@ -1,0 +1,143 @@
+---
+title: "Assignment4_PowerLaws"
+author: "Riccardo Fusaroli"
+date: "July 12, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Assignment 4 - Assessing Complex Systems via Power Laws
+
+In this assignment you will analyse the finger tapping data you produced last week
+
+- let's visualize the distribution
+- let's check for normality
+- let's check for time-dependence (auto-correlation, mi). But this are local patterns!
+
+- Let's check for power-law distribution!
+- Let's check for spectral density (noise analysis)
+
+- Let's loop through all the time-series
+- Let's run a mixed effects model to figure out whether:
+  a) there is a higher amount of powerlaws in one condition
+  b) the alpha estimation is different between conditions
+
+N.B. Should this be first with a simulated time-series? Or straight to the fingertapping?
+
+```{r}
+# Generating white noise for comparison
+values=rnorm(1000, mean = 0, sd = 1)
+wNoise=data.frame(values)
+# Generating random numbers from a power law
+values=scale(rpldis(1000, xmin=1, alpha=1.1, discrete_max = 10000),center=T,scale=T)
+pLaw1=data.frame(values)
+values=scale(rpldis(1000, xmin=1, alpha=2, discrete_max = 10000),center=T,scale=T)
+pLaw2=data.frame(values)
+values=scale(rpldis(1000, xmin=1, alpha=3, discrete_max = 10000),center=T,scale=T)
+pLaw3=data.frame(values)
+
+```
+
+## Visualizing the distributions
+
+```{r}
+ggplot(wNoise,aes(values))+geom_histogram()
+ggplot(pLaw1,aes(values))+geom_histogram()
+ggplot(pLaw2,aes(values))+geom_histogram()
+ggplot(pLaw3,aes(values))+geom_histogram()
+```
+
+## Check for normality
+
+```{r}
+shapiro.test(wNoise$values)
+qqnorm(wNoise$values);qqline(wNoise$values, col = 2)
+shapiro.test(pLaw1$values)
+qqnorm(pLaw1$values);qqline(pLaw1$values, col = 2)
+shapiro.test(pLaw2$values)
+qqnorm(pLaw2$values);qqline(pLaw2$values, col = 2)
+shapiro.test(pLaw3$values)
+qqnorm(pLaw3$values);qqline(pLaw3$values, col = 2)
+```
+
+
+## Check for time-dependence
+
+```{r}
+tau.ami = timeLag(pLaw2$values, technique = "ami", lag.max = 30, do.plot = T)
+emb.dim = estimateEmbeddingDim(pLaw2$values, time.lag = tau.ami,max.embedding.dim = 10)
+
+```
+
+## Check for power-law distribution!
+
+N.B. this follows step-by-step the tutorial of poweRlaw
+
+```{r}
+
+# Create a new power law object
+m_m = conpl$new(pLaw2$values)
+m_m$getXmin()
+m_m$getPars()
+
+#m_m$setPars(2)
+# Estimate xmin (using kolmogorov-smirnoff)
+(est = estimate_xmin(m_m))
+# Set xmin
+m_m$setXmin(est)
+# Estimate alpha given an xmin
+(est = estimate_pars(m_m))
+
+# Create the data to plot the powerlaw
+dd = plot(m_m)
+ggplot(dd, aes(x,y))+geom_point() + scale_y_log10()+ scale_x_log10()
+
+# Now estimating uncertainty
+cores=parallel::detectCores() # Figuring out how many cores on your machine
+bs = bootstrap(m_m, no_of_sims=1000, threads=cores) # Bootstrapping and distributing the bootstrapping across cores
+hist(bs$bootstraps[,2], breaks="fd")#xmin
+hist(bs$bootstraps[,3], breaks="fd")#alpha
+plot(jitter(bs$bootstraps[,2], factor=1.2), bs$bootstraps[,3])
+bs_p = bootstrap_p(m_m, no_of_sims=1000, threads=cores)
+```
+
+## Check for spectral density (noise analysis)
+
+```{r}
+x1=dfa(wNoise$values)
+estimate(x1,do.plot=TRUE)
+#x2=rqa(takens = NULL, time.series = pLaw2$values, embedding.dim = emb.dim, time.lag = tau.ami,radius=1,do.plot = T)
+```
+
+## Now let's loop the whole process through the whole set of time-series
+
+Remember that we are interested in having a dataframe with the following columns:
+- Participant
+- Condition
+- Normality
+- Lag at which autocorrelation is minimized
+- Lag at which mutual information is minimized
+- Embedding Dimensions
+- Estimated xmin
+- Estimated alpha
+- ? Something on uncertainty??
+- Dfa estimate
+
+```{r}
+
+```
+
+## Now let's test a few hypotheses
+Per each hypothesis run a statistical test and a draw a plot
+
+- H1: The metronome condition will have more normal distributions of interbeat intervals than the self-driven one
+- H2: 
+
+```{r}
+
+```
+
+
