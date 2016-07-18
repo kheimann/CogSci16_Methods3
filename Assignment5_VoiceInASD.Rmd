@@ -1,0 +1,73 @@
+---
+title: "Assignment5_VoiceInASD"
+author: "Riccardo Fusaroli"
+date: "July 17, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Assignment 5 - Assessing voice in ASD
+
+People with ASD have been often described as odd in their speech. A recent meta-analysis of the literature (Fusaroli et al. 2016) indicates that pitch might be involved.
+
+In the course of this assignment we will:
+- extract parametric and non-parametric descriptors of pitch
+- extract dynamic descriptors of pitch
+- compare how well these descriptors characterize the autistic voice *relative to each other*
+- assess whether these descriptors complement each other in describing the autistic voice
+
+
+## Load libraries and data
+```{r}
+
+
+```
+
+## Extract parametric descriptors
+
+Mean, standard deviation, range
+
+```{r}
+
+```
+
+## Extract non-parametric descriptors
+
+Median, interquartile range, coefficient of variation, mean absoluted deviation, median absolute deviation, skewness, kurtosis
+
+```{r}
+
+```
+
+## Extract dynamic descriptors
+
+Recurrence Quantification Analysis, Power law alpha, DFA alpha
+
+```{r}
+
+```
+
+## Let's figure out which single descriptor best discriminates
+
+N.B. remember the first two classes: cross-validate or use information criteria :-)
+
+```{r}
+
+```
+
+## Let's explore whether the descriptors complement each other (find the best combination of descriptors discriminating the voice of ASD from the voice of TD)
+
+N.B. remember the first two classes: cross-validate or use information criteria :-)
+
+```{r}
+
+```
+
+## Report the results
+
+METHODS SECTION: how did you analyse the data?
+
+RESULTS SECTION: which descriptor is the single best descriptor? what's its accuracy, sensitivity, specificity? what's the best combination of 
